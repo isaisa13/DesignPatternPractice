@@ -10,11 +10,12 @@ namespace designPattern
     {
         static void Main(string[] args)
         {
-            BookShelf bookShelf = new BookShelf(4);
+            BookShelf bookShelf = new BookShelf();
             bookShelf.appendBook(new Book("book1aa"));
             bookShelf.appendBook(new Book("book2b"));
             bookShelf.appendBook(new Book("book3ss"));
             bookShelf.appendBook(new Book("book4___"));
+            bookShelf.appendBook(new Book("book5_a"));
 
             IIterator it = bookShelf.iterator();
             Book book;
@@ -51,10 +52,9 @@ namespace designPattern
 
     class BookShelf : IAggregate
     {
-        public BookShelf(int maxSize_)
+        public BookShelf()
         {
-            _last  = 0;
-            _books = new Book[ maxSize_ ];
+            _books = new List<Book>();
         }
 
         public Book getBookAt(int index_)
@@ -64,13 +64,12 @@ namespace designPattern
 
         public void appendBook(Book book_)
         {
-            _books[_last] = book_;
-            _last++;
+            _books.Add(book_);
         }
 
         public int getLength()
         {
-            return _last;
+            return _books.Count();
         }
 
         public IIterator iterator()
@@ -78,8 +77,7 @@ namespace designPattern
             return new BookShelfIterator(this);
         }
 
-        int _last;
-        Book[] _books;
+        List<Book> _books;
     }
 
     class BookShelfIterator : IIterator
