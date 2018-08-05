@@ -10,7 +10,9 @@ namespace designPattern
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            IPrint p = new PrintBanner("Hello");
+            p.printStrong();
+            p.printWeak();
 
             // Keep the console window open in debug mode.
             Console.WriteLine("Press any key to exit.");
@@ -18,7 +20,7 @@ namespace designPattern
         }
 
 
-        interface Print
+        interface IPrint
         {
             void printWeak();
             void printStrong();
@@ -31,11 +33,32 @@ namespace designPattern
                 _string = string_;
             }
 
+            public void showWithParen()
+            {
+                Console.WriteLine("(" + _string + ")");
+            }
 
-
+            public void showWithAster()
+            {
+                Console.WriteLine("*" + _string + "*");
+            }
 
             string _string;
         }
+
+        class PrintBanner : Banner,IPrint
+        {
+            public PrintBanner(String string_):base(string_)
+            {
+            }
+            public void printWeak() {
+                showWithParen();
+            }
+            public void printStrong() {
+                showWithAster();
+            }
+        }
+
 
 
 
