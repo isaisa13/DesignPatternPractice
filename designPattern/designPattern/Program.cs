@@ -10,7 +10,7 @@ namespace designPattern
     {
         static void Main(string[] args)
         {
-            IPrint p = new PrintBanner("Hello");
+            Print p = new PrintBanner("Hello");
             p.printStrong();
             p.printWeak();
 
@@ -19,13 +19,13 @@ namespace designPattern
             Console.ReadKey();
         }
 
-
-        interface IPrint
+        public abstract class Print
         {
-            void printWeak();
-            void printStrong();
+            public abstract void printWeak();
+            public abstract void printStrong();
         }
 
+   
         class Banner
         {
             public Banner(string string_)
@@ -46,16 +46,19 @@ namespace designPattern
             string _string;
         }
 
-        class PrintBanner : Banner,IPrint
+        class PrintBanner : Print
         {
-            public PrintBanner(String string_):base(string_)
+            Banner _banner;
+
+            public PrintBanner(String string_)
             {
+                _banner = new Banner(string_);
             }
-            public void printWeak() {
-                showWithParen();
+            public override void printWeak() {
+                _banner.showWithParen();
             }
-            public void printStrong() {
-                showWithAster();
+            public override void printStrong() {
+                _banner.showWithAster();
             }
         }
 
