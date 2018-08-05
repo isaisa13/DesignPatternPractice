@@ -16,5 +16,28 @@ namespace designPattern
             Console.WriteLine("Press any key to exit.");
             Console.ReadKey();
         }
+
+
+        interface Print
+        {
+            void printWeak();
+            void printStrong();
+        }
+
+        class Banner
+        {
+            public Banner(string string_)
+            {
+                _string = string_;
+            }
+
+
+
+
+            string _string;
+        }
+
+
+
     }
 }
