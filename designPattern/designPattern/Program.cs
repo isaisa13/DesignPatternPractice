@@ -10,58 +10,97 @@ namespace designPattern
     {
         static void Main(string[] args)
         {
-            Print p = new PrintBanner("Hello");
-            p.printStrong();
-            p.printWeak();
+            AbstractDisplay d1 = new CharDisplay('H');
+            AbstractDisplay d2 = new StringDisplay("Hello, world.");
+            AbstractDisplay d3 = new StringDisplay("こんにちは");
+
+            d1.display();
+            d2.display();
+            d3.display();
 
             // Keep the console window open in debug mode.
             Console.WriteLine("Press any key to exit.");
             Console.ReadKey();
         }
 
-        public abstract class Print
+        public abstract class AbstractDisplay
         {
-            public abstract void printWeak();
-            public abstract void printStrong();
+            public abstract void open();
+            public abstract void print();
+            public abstract void close();
+            public void display()
+            {
+                open();
+                for(int i = 0; i < 5; i++)
+                {
+                    print();
+                }
+                close();
+            }
         }
 
-   
-        class Banner
+
+        public class CharDisplay : AbstractDisplay
         {
-            public Banner(string string_)
+            char _ch;
+            public CharDisplay(char ch_)
+            {
+                _ch = ch_;
+            }
+
+            public override void open()
+            {
+                Console.Write("<<");
+            }
+            
+            public override void print()
+            {
+                Console.Write(_ch);
+            }
+
+            public override void close()
+            {
+                Console.WriteLine(">>");
+            }
+        }
+
+        public class StringDisplay : AbstractDisplay
+        {
+            string _string;
+            int    _width;
+
+
+            public StringDisplay(string string_)
             {
                 _string = string_;
+                _width = _string.Length;
             }
 
-            public void showWithParen()
+            public override void open()
             {
-                Console.WriteLine("(" + _string + ")");
+                printLint();
             }
 
-            public void showWithAster()
+            public override void print()
             {
-                Console.WriteLine("*" + _string + "*");
+                Console.WriteLine("|"+_string+"|");
             }
 
-            string _string;
-        }
-
-        class PrintBanner : Print
-        {
-            Banner _banner;
-
-            public PrintBanner(String string_)
+            public override void close()
             {
-                _banner = new Banner(string_);
+                printLint();
             }
-            public override void printWeak() {
-                _banner.showWithParen();
-            }
-            public override void printStrong() {
-                _banner.showWithAster();
+
+            void printLint()
+            {
+                Console.Write("+");
+                for(int i=0; i < _width; i++)
+                {
+                    Console.Write("-");
+                }
+                Console.WriteLine("+");
             }
         }
-
 
 
 
